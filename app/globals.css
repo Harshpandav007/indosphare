@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --or: #E8600A;
+  --or2: #F97316;
+  --or-dk: #B84A06;
+  --or-pale: #FFF4ED;
+  --blue: #1A3A6E;
+  --blk: #050505;
+  --blk2: #0E0E0E;
+  --blk3: #141414;
+  --wht: #FFFFFF;
+  --wht2: #F5F3EF;
+  --wht3: #ECEAE5;
+  --g500: #6A6A65;
+}
+
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+@keyframes ringPulse {
+  0%,100%{opacity:.08;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:.2;transform:translate(-50%,-50%) scale(1.04)}
+}
+@keyframes loadBar {
+  0%{width:0%} 60%{width:75%} 100%{width:100%}
+}
+@keyframes wabob {
+  0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0E0E0E}
+::-webkit-scrollbar-thumb{background:#E8600A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#F97316}
+
+*{-webkit-tap-highlight-color:transparent}
+img{user-select:none;-webkit-user-drag:none}
+:focus-visible{outline:2px solid #E8600A;outline-offset:2px}
+
+/* Font variables — loaded via <link> in layout.tsx */
+:root {
+  --font-cormorant: 'Cormorant Garamond';
+  --font-inter: 'Inter';
+  --font-montserrat: 'Montserrat';
+  --font-oswald: 'Oswald';
+}
+body {
+  font-family: 'Inter', sans-serif;
+}
