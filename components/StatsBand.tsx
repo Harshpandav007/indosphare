@@ -27,22 +27,40 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [to])
-  return <div ref={ref} style={{ fontFamily:'var(--font-oswald),sans-serif', fontSize:58, fontWeight:700, color:'#F97316', lineHeight:1, letterSpacing:'2px', marginBottom:10 }}>{value}{suffix}</div>
+  return (
+    <div ref={ref} style={{ fontFamily:'var(--font-oswald),sans-serif', fontSize:'clamp(40px,10vw,58px)', fontWeight:700, color:'#F97316', lineHeight:1, letterSpacing:'2px', marginBottom:10 }}>
+      {value}{suffix}
+    </div>
+  )
 }
 
 export default function StatsBand() {
   return (
     <div style={{ background:'#0E0E0E', borderTop:'1px solid rgba(232,96,10,0.1)', borderBottom:'1px solid rgba(232,96,10,0.1)' }}>
-      <div style={{ maxWidth:1360, margin:'0 auto', padding:'0 48px', display:'grid', gridTemplateColumns:'repeat(3,1fr)' }}>
+      {/* Responsive: 3 cols on desktop, 1 col on mobile */}
+      <div style={{ maxWidth:1360, margin:'0 auto', padding:'0 clamp(16px,4vw,48px)', display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,200px),1fr))' }}>
         {stats.map((s, i) => (
-          <div key={s.label} style={{ padding:'52px 32px', textAlign:'center', borderRight: i < stats.length-1 ? '1px solid rgba(255,255,255,0.06)' : 'none', position:'relative', overflow:'hidden', transition:'background 0.25s', cursor:'default' }}
+          <div key={s.label}
+            style={{ padding:'clamp(36px,7vw,52px) 32px', textAlign:'center', borderRight: i < stats.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none', borderBottom:'none', position:'relative', overflow:'hidden', transition:'background 0.25s', cursor:'default' }}
             onMouseEnter={e=>(e.currentTarget.style.background='rgba(232,96,10,0.04)')}
             onMouseLeave={e=>(e.currentTarget.style.background='transparent')}>
             <Counter to={s.to} suffix={s.suffix} />
-            <div style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:11, color:'#666', textTransform:'uppercase', letterSpacing:'2.5px', fontWeight:500 }}>{s.label}</div>
+            <div style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:'clamp(10px,2.5vw,11px)', color:'#666', textTransform:'uppercase', letterSpacing:'2.5px', fontWeight:500 }}>{s.label}</div>
           </div>
         ))}
       </div>
+      <style>{`
+        @media (max-width: 600px) {
+          /* Stack stats vertically, remove side borders, add bottom borders */
+          .stats-band-grid > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+          }
+          .stats-band-grid > div:last-child {
+            border-bottom: none !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }
