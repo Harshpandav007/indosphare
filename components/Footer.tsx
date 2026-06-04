@@ -30,6 +30,62 @@ const linkBtn: React.CSSProperties = {
   textAlign:'left' as const, transition:'color 0.2s', width:'100%',
 }
 
+// SVG icons for contact rows
+const PhoneIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .9h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+  </svg>
+)
+const EmailIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="4" width="20" height="16" rx="2"/>
+    <path d="M2 7l10 7 10-7"/>
+  </svg>
+)
+const ClockIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <polyline points="12 6 12 12 16 14"/>
+  </svg>
+)
+const LocationIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+    <circle cx="12" cy="9" r="2.5"/>
+  </svg>
+)
+
+const contactRows = [
+  {
+    icon: <PhoneIcon />,
+    label: 'Phone / WhatsApp',
+    lines: ['+91 91068 45134', '+91 63544 96611'],
+    hrefs: ['tel:+919106845134', 'tel:+916354496611'],
+    isLink: true,
+  },
+  {
+    icon: <EmailIcon />,
+    label: 'Email',
+    lines: ['info@indosphareexport.com'],
+    hrefs: ['mailto:info@indosphareexport.com'],
+    isLink: true,
+  },
+  {
+    icon: <ClockIcon />,
+    label: 'Business Hours',
+    lines: ['Mon – Sun: 9 AM – 8 PM IST'],
+    hrefs: [],
+    isLink: false,
+  },
+  {
+    icon: <LocationIcon />,
+    label: 'Location',
+    lines: ['India — Exporting Worldwide'],
+    hrefs: [],
+    isLink: false,
+  },
+]
+
 export default function Footer() {
   const { openLegal } = useApp()
 
@@ -37,11 +93,11 @@ export default function Footer() {
     <footer style={{ background:'#000', borderTop:'1px solid rgba(255,255,255,0.05)' }}>
 
       {/* Main grid — 4 cols desktop → 2 cols tablet → 1 col mobile */}
-      <div style={{
+      <div className="footer-main-grid" style={{
         maxWidth:1360, margin:'0 auto',
         padding:'clamp(40px,8vw,72px) clamp(16px,4vw,48px) clamp(36px,6vw,56px)',
         display:'grid',
-        gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,220px),1fr))',
+        gridTemplateColumns:'2fr 1fr 1fr 1.5fr',
         gap:'clamp(28px,5vw,52px)',
       }}>
 
@@ -116,21 +172,21 @@ export default function Footer() {
             <div style={{ position:'absolute', bottom:0, left:0, width:28, height:'1.5px', background:'#E8600A' }} />
           </div>
           <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-            {[
-              { icon:'📞', label:'Phone / WhatsApp', lines:['+91 91068 45134','+91 63544 96611'], hrefs:['tel:+919106845134','tel:+916354496611'], isLink:true },
-              { icon:'✉️', label:'Email',            lines:['info@indosphareexport.com'],           hrefs:['mailto:info@indosphareexport.com'],  isLink:true },
-              { icon:'🕐', label:'Business Hours',   lines:['Mon – Sun: 9 AM – 8 PM IST'],          hrefs:[], isLink:false },
-              { icon:'🇮🇳', label:'Location',        lines:['India — Exporting Worldwide'],          hrefs:[], isLink:false },
-            ].map(item => (
+            {contactRows.map(item => (
               <div key={item.label} style={{ display:'flex', alignItems:'flex-start', gap:12 }}>
-                <div style={{ width:34, height:34, borderRadius:8, background:'rgba(232,96,10,0.12)', border:'1px solid rgba(232,96,10,0.2)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, fontSize:15 }}>
+                {/* Icon box with SVG */}
+                <div style={{ width:34, height:34, borderRadius:8, background:'rgba(232,96,10,0.12)', border:'1px solid rgba(232,96,10,0.2)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                   {item.icon}
                 </div>
                 <div>
-                  <div style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:10.5, fontWeight:700, letterSpacing:'1.5px', textTransform:'uppercase', color:'rgba(255,255,255,0.28)', marginBottom:2 }}>{item.label}</div>
+                  <div style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:10.5, fontWeight:700, letterSpacing:'1.5px', textTransform:'uppercase', color:'rgba(255,255,255,0.28)', marginBottom:2 }}>
+                    {item.label}
+                  </div>
                   {item.lines.map((line, i) => (
                     item.isLink && item.hrefs[i]
-                      ? <a key={line} href={item.hrefs[i]} style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:'clamp(12px,3vw,14px)', color:'rgba(255,255,255,0.45)', textDecoration:'none', display:'block', transition:'color 0.2s' }} onMouseEnter={e=>(e.currentTarget.style.color='#F97316')} onMouseLeave={e=>(e.currentTarget.style.color='rgba(255,255,255,0.45)')}>{line}</a>
+                      ? <a key={line} href={item.hrefs[i]} style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:'clamp(12px,3vw,14px)', color:'rgba(255,255,255,0.45)', textDecoration:'none', display:'block', transition:'color 0.2s' }}
+                          onMouseEnter={e=>(e.currentTarget.style.color='#F97316')}
+                          onMouseLeave={e=>(e.currentTarget.style.color='rgba(255,255,255,0.45)')}>{line}</a>
                       : <p key={line} style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:'clamp(12px,3vw,14px)', color:'rgba(255,255,255,0.45)', margin:0 }}>{line}</p>
                   ))}
                 </div>
@@ -174,6 +230,11 @@ export default function Footer() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 1024px) { .footer-main-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 580px)  { .footer-main-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </footer>
   )
 }

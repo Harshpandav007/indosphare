@@ -22,7 +22,7 @@ export default function Certifications() {
       <div style={{ maxWidth:1360, margin:'0 auto', padding:'0 clamp(16px,4vw,48px)' }}>
 
         {/* Intro — 2 cols desktop, 1 col mobile */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,380px),1fr))', gap:'clamp(32px,5vw,68px)', alignItems:'center', marginBottom:'clamp(36px,6vw,56px)' }}>
+        <div className="certs-intro-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(32px,5vw,68px)', alignItems:'center', marginBottom:'clamp(36px,6vw,56px)' }}>
           <div>
             <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:14 }}>
               <div style={{ width:26, height:1, background:'#E8600A' }} />
@@ -33,7 +33,7 @@ export default function Certifications() {
             </h2>
             <div style={{ width:42, height:'2.5px', background:'linear-gradient(90deg,#E8600A,#F97316)', borderRadius:2, margin:'18px 0' }} />
             <p style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:'clamp(14px,3.5vw,15px)', color:'rgba(255,255,255,0.5)', lineHeight:1.9, fontWeight:300, margin:0 }}>
-              Our certifications reflect an unwavering commitment to food safety, quality, and compliant international trade.
+              Our certifications reflect an unwavering commitment to food safety, quality, and compliant international trade. Every certificate is maintained, renewed, and proudly displayed.
             </p>
           </div>
 
@@ -52,8 +52,8 @@ export default function Certifications() {
           </div>
         </div>
 
-        {/* Cert cards — 4 cols desktop, 2 cols tablet, 1 col mobile */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(min(100%,220px),1fr))', gap:'clamp(12px,2.5vw,20px)' }}>
+        {/* FIXED 4-col cert grid — responsive on mobile */}
+        <div className="cert-grid-responsive" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'clamp(12px,2.5vw,20px)' }}>
           {certs.map(cert => (
             <div key={cert.name}
               style={{ background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:20, padding:'clamp(24px,4vw,32px) clamp(14px,3vw,16px) clamp(20px,4vw,28px)', textAlign:'center', position:'relative', overflow:'hidden', transition:'all 0.35s', cursor:'default' }}
@@ -69,6 +69,12 @@ export default function Certifications() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 860px)  { .cert-grid-responsive { grid-template-columns: repeat(2,1fr) !important; } }
+        @media (max-width: 480px)  { .cert-grid-responsive { grid-template-columns: repeat(1,1fr) !important; } }
+        @media (max-width: 768px)  { .certs-intro-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   )
 }

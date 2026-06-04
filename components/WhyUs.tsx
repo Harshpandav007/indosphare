@@ -13,8 +13,6 @@ export default function WhyUs() {
   return (
     <section style={{ background:'#080808', padding:'clamp(60px,10vw,96px) 0' }}>
       <div style={{ maxWidth:1360, margin:'0 auto', padding:'0 clamp(16px,4vw,48px)' }}>
-
-        {/* Header */}
         <div style={{ textAlign:'center', maxWidth:600, margin:'0 auto clamp(40px,7vw,60px)' }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:12, marginBottom:14 }}>
             <div style={{ width:26, height:1, background:'#E8600A' }} />
@@ -29,9 +27,7 @@ export default function WhyUs() {
             We go beyond supply — we build long-term partnerships grounded in quality, reliability, and complete transparency.
           </p>
         </div>
-
-        {/* Cards — 3 cols desktop, 2 cols tablet, 1 col mobile */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(min(100%,280px),1fr))', gap:'clamp(12px,2.5vw,18px)' }}>
+        <div className="whyus-grid" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'clamp(12px,2.5vw,18px)' }}>
           {cards.map(c => (
             <div key={c.title}
               style={{ background:'rgba(255,255,255,0.025)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:20, padding:'clamp(24px,4vw,36px) clamp(20px,3vw,28px)', position:'relative', overflow:'hidden', transition:'all 0.3s', cursor:'default' }}
@@ -44,6 +40,10 @@ export default function WhyUs() {
           ))}
         </div>
       </div>
+      <style>{`
+        @media (max-width: 900px) { .whyus-grid { grid-template-columns: repeat(2,1fr) !important; } }
+        @media (max-width: 580px) { .whyus-grid { grid-template-columns: repeat(1,1fr) !important; } }
+      `}</style>
     </section>
   )
 }

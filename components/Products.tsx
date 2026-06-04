@@ -41,20 +41,16 @@ export default function Products() {
                 <span style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:10, fontWeight:700, letterSpacing:'2px', color:'#E8600A', background:'#FFF4ED', border:'1px solid rgba(232,96,10,0.14)', padding:'5px 12px', borderRadius:20, textTransform:'uppercase', flexShrink:0 }}>{cat.count} Products</span>
               </div>
 
-              {/* Product grid — 5 cols desktop → 2 cols mobile */}
-              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(min(100%,180px),1fr))', gap:'clamp(12px,2.5vw,18px)' }}>
+              {/* FIXED 5-col grid — responsive on mobile */}
+              <div className="pgrid-responsive" style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:'clamp(12px,2.5vw,18px)' }}>
                 {catProds.map(product => (
                   <div key={product.id} onClick={()=>openPanel(product)}
                     style={{ background:'#fff', borderRadius:16, overflow:'hidden', border:'1px solid rgba(0,0,0,0.07)', cursor:'pointer', display:'flex', flexDirection:'column', transition:'transform 0.3s,box-shadow 0.3s' }}
                     onMouseEnter={e=>{ const el=e.currentTarget; el.style.transform='translateY(-6px)'; el.style.boxShadow='0 22px 52px rgba(0,0,0,0.13)' }}
                     onMouseLeave={e=>{ const el=e.currentTarget; el.style.transform='none'; el.style.boxShadow='none' }}>
-
-                    {/* Image */}
                     <div style={{ width:'100%', height:'clamp(140px,25vw,200px)', background:'#ECEAE5', flexShrink:0, overflow:'hidden', position:'relative' }}>
                       <Image src={product.image} alt={product.name} fill style={{ objectFit:'cover' }} sizes="(max-width:600px) 45vw, (max-width:900px) 30vw, 20vw" />
                     </div>
-
-                    {/* Body */}
                     <div style={{ padding:'clamp(12px,2.5vw,16px)', display:'flex', flexDirection:'column', flex:1 }}>
                       <div style={{ fontFamily:'var(--font-oswald),sans-serif', fontSize:'clamp(13px,3vw,15px)', fontWeight:700, color:'#050505', marginBottom:6, lineHeight:1.25, letterSpacing:'0.3px' }}>{product.name}</div>
                       <p style={{ fontFamily:'var(--font-inter),sans-serif', fontSize:'clamp(11px,2.5vw,12px)', color:'#6A6A65', lineHeight:1.6, marginBottom:'clamp(10px,2vw,14px)', flex:1, fontWeight:300 }}>{product.description}</p>
@@ -72,6 +68,12 @@ export default function Products() {
           )
         })}
       </div>
+
+      <style>{`
+        @media (max-width: 1100px) { .pgrid-responsive { grid-template-columns: repeat(4,1fr) !important; } }
+        @media (max-width: 860px)  { .pgrid-responsive { grid-template-columns: repeat(3,1fr) !important; } }
+        @media (max-width: 600px)  { .pgrid-responsive { grid-template-columns: repeat(2,1fr) !important; } }
+      `}</style>
     </section>
   )
 }
